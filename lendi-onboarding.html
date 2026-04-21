@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lendi — Fiji's Peer-to-Peer Lending Platform</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,700;1,9..144,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --ocean-deep:  #0B3D45;
+      --ocean-mid:   #1A6B78;
+      --ocean-light: #2A8F9E;
+      --sand:        #F5EDD8;
+      --sand-warm:   #EDD9B5;
+      --coral:       #D96B4F;
+      --coral-light: #E8896E;
+      --green-deep:  #1E5C3F;
+      --green-mid:   #2D7A55;
+      --green-light: #52B788;
+      --foam:        #D4EDE8;
+      --white:       #FDFAF5;
+      --text-dark:   #0F2A30;
+      --text-muted:  #5C7A7E;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--sand);
+      min-height: 100vh;
+      display: flex;
+      overflow: hidden;
+    }
+
+    /* ── LEFT PANEL ───────────────────────────────────── */
+    .panel-left {
+      width: 46%;
+      min-height: 100vh;
+      background: var(--ocean-deep);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 2.8rem 3rem;
+    }
+
+    /* atmospheric gradients */
+    .panel-left::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 15% 15%, rgba(42,143,158,0.35) 0%, transparent 55%),
+        radial-gradient(ellipse at 85% 85%, rgba(30,92,63,0.45) 0%, transparent 55%);
+      pointer-events: none;
+    }
+
+    /* decorative leaf shapes */
+    .leaf-a {
+      position: absolute;
+      top: -6%;
+      right: -6%;
+      width: 260px;
+      height: 260px;
+      opacity: 0.07;
+      pointer-events: none;
+    }
+    .leaf-b {
+      position: absolute;
+      bottom: 12%;
+      left: -10%;
+      width: 190px;
+      height: 190px;
+      opacity: 0.055;
+      transform: rotate(50deg);
+      pointer-events: none;
+    }
+
+    /* animated waves */
+    .waves {
+      position: absolute;
+      bottom: 0;
+      left: -50%;
+      width: 200%;
+      height: 55%;
+      pointer-events: none;
+    }
+    .wave { position: absolute; bottom: 0; width: 100%; }
+    .wave-1 { animation: wave 13s linear infinite;           opacity: 0.14; }
+    .wave-2 { animation: wave 9s  linear infinite reverse;   opacity: 0.10; bottom: -18px; }
+    .wave-3 { animation: wave 17s linear infinite;           opacity: 0.07; bottom: -36px; }
+
+    @keyframes wave {
+      from { transform: translateX(0); }
+      to   { transform: translateX(50%); }
+    }
+
+    /* brand */
+    .brand { position: relative; z-index: 2; }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      margin-bottom: 0.55rem;
+    }
+
+    .brand-mark {
+      width: 40px;
+      height: 40px;
+      background: var(--coral);
+      border-radius: 50% 50% 50% 12%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 16px rgba(217,107,79,0.4);
+    }
+    .brand-mark svg { display: block; }
+
+    .brand-name {
+      font-family: 'Fraunces', serif;
+      font-size: 1.9rem;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: -0.025em;
+    }
+
+    .demo-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      background: rgba(217,107,79,0.18);
+      border: 1px solid rgba(217,107,79,0.45);
+      color: var(--coral-light);
+      font-size: 0.63rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 0.22rem 0.75rem;
+      border-radius: 100px;
+    }
+    .demo-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--coral);
+      border-radius: 50%;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%,100% { opacity:1; transform:scale(1); }
+      50%      { opacity:.5; transform:scale(.75); }
+    }
+
+    /* hero */
+    .hero {
+      position: relative;
+      z-index: 2;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 1.5rem 0;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--green-light);
+      margin-bottom: 1.2rem;
+    }
+
+    .hero-heading {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(2.2rem, 3vw, 3rem);
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.07;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.4rem;
+    }
+    .hero-heading em {
+      font-style: italic;
+      color: var(--sand-warm);
+      font-weight: 400;
+    }
+
+    .hero-body {
+      font-size: 0.93rem;
+      color: rgba(212,237,232,0.72);
+      line-height: 1.72;
+      max-width: 360px;
+      margin-bottom: 2.2rem;
+    }
+
+    .stats {
+      display: flex;
+      gap: 2.4rem;
+    }
+    .stat-number {
+      font-family: 'Fraunces', serif;
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1;
+      display: block;
+      margin-bottom: 0.2rem;
+    }
+    .stat-label {
+      font-size: 0.66rem;
+      color: rgba(212,237,232,0.45);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* footer tag */
+    .made-in {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+    .made-in-line {
+      width: 28px;
+      height: 1px;
+      background: rgba(212,237,232,0.25);
+    }
+    .made-in-text {
+      font-size: 0.67rem;
+      color: rgba(212,237,232,0.38);
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+    }
+
+    /* ── RIGHT PANEL ──────────────────────────────────── */
+    .panel-right {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2.5rem 2.8rem;
+      position: relative;
+      overflow-y: auto;
+    }
+
+    /* subtle dot texture on sand */
+    .panel-right::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle, rgba(11,61,69,0.04) 1px, transparent 0);
+      background-size: 22px 22px;
+      pointer-events: none;
+    }
+
+    .form-wrap {
+      width: 100%;
+      max-width: 400px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* tab toggle */
+    .tabs {
+      display: flex;
+      background: rgba(11,61,69,0.08);
+      border-radius: 11px;
+      padding: 4px;
+      margin-bottom: 1.8rem;
+    }
+    .tab {
+      flex: 1;
+      padding: 0.62rem;
+      border: none;
+      background: transparent;
+      border-radius: 8px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.22s ease;
+    }
+    .tab.active {
+      background: var(--white);
+      color: var(--ocean-deep);
+      box-shadow: 0 1px 8px rgba(11,61,69,0.13);
+    }
+
+    /* role selector */
+    .role-label {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.7rem;
+    }
+    .role-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.7rem;
+      margin-bottom: 1.4rem;
+    }
+    .role-card { position: relative; cursor: pointer; }
+    .role-card input[type="radio"] { position: absolute; opacity: 0; width: 0; height: 0; }
+    .role-inner {
+      border: 1.5px solid rgba(11,61,69,0.11);
+      border-radius: 12px;
+      padding: 1rem 0.9rem;
+      background: var(--white);
+      transition: all 0.2s ease;
+    }
+    .role-card input:checked + .role-inner {
+      border-color: var(--ocean-mid);
+      background: rgba(26,107,120,0.05);
+      box-shadow: 0 0 0 1px var(--ocean-mid);
+    }
+    .role-icon { margin-bottom: 0.6rem; display: block; }
+    .role-title {
+      font-family: 'Fraunces', serif;
+      font-size: 0.97rem;
+      font-weight: 500;
+      color: var(--text-dark);
+      margin-bottom: 0.2rem;
+    }
+    .role-desc {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      line-height: 1.45;
+    }
+
+    /* fields */
+    .fields { display: flex; flex-direction: column; gap: 0.85rem; margin-bottom: 1.4rem; }
+    .field { display: flex; flex-direction: column; gap: 0.38rem; }
+    .field-label {
+      font-size: 0.77rem;
+      font-weight: 500;
+      color: var(--text-dark);
+    }
+    .field-input {
+      width: 100%;
+      padding: 0.72rem 1rem;
+      border: 1.5px solid rgba(11,61,69,0.12);
+      border-radius: 9px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.88rem;
+      color: var(--text-dark);
+      background: var(--white);
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .field-input::placeholder { color: rgba(92,122,126,0.48); }
+    .field-input:focus {
+      border-color: var(--ocean-mid);
+      box-shadow: 0 0 0 3px rgba(26,107,120,0.1);
+    }
+    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.7rem; }
+
+    /* forgot */
+    .forgot {
+      text-align: right;
+    }
+    .forgot a {
+      font-size: 0.76rem;
+      color: var(--ocean-mid);
+      text-decoration: none;
+      transition: color 0.18s;
+    }
+    .forgot a:hover { color: var(--ocean-deep); }
+
+    /* submit */
+    .btn-submit {
+      width: 100%;
+      padding: 0.88rem;
+      background: var(--ocean-deep);
+      color: var(--white);
+      border: none;
+      border-radius: 9px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.93rem;
+      font-weight: 500;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.2s;
+      margin-bottom: 1rem;
+    }
+    .btn-submit::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, var(--ocean-mid) 0%, var(--ocean-deep) 100%);
+      opacity: 0;
+      transition: opacity 0.22s;
+    }
+    .btn-submit:hover::after { opacity: 1; }
+    .btn-submit:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 24px rgba(11,61,69,0.26);
+    }
+    .btn-submit:active { transform: translateY(0); }
+    .btn-submit span { position: relative; z-index: 1; }
+
+    /* terms */
+    .terms {
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      text-align: center;
+      line-height: 1.55;
+      margin-bottom: 1rem;
+    }
+    .terms a { color: var(--ocean-mid); text-decoration: none; }
+
+    /* fiji notice */
+    .fj-notice {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.65rem;
+      background: rgba(82,183,136,0.09);
+      border: 1px solid rgba(82,183,136,0.22);
+      border-radius: 10px;
+      padding: 0.78rem 0.95rem;
+      margin-top: 1rem;
+    }
+    .fj-flag { font-size: 1rem; flex-shrink: 0; line-height: 1.5; }
+    .fj-text {
+      font-size: 0.7rem;
+      color: var(--green-deep);
+      line-height: 1.5;
+    }
+    .fj-text strong { display: block; font-weight: 500; margin-bottom: 0.1rem; }
+
+    /* panel visibility */
+    .form-panel { display: none; }
+    .form-panel.active { display: block; }
+
+    /* entrance animations */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .brand        { animation: fadeUp 0.55s 0.05s ease both; }
+    .hero-eyebrow { animation: fadeUp 0.55s 0.18s ease both; }
+    .hero-heading { animation: fadeUp 0.55s 0.28s ease both; }
+    .hero-body    { animation: fadeUp 0.55s 0.38s ease both; }
+    .stats        { animation: fadeUp 0.55s 0.48s ease both; }
+    .form-wrap    { animation: fadeUp 0.55s 0.22s ease both; }
+
+    /* responsive */
+    @media (max-width: 820px) {
+      body { flex-direction: column; overflow-y: auto; }
+      .panel-left {
+        width: 100%;
+        min-height: auto;
+        padding: 2rem;
+      }
+      .stats { display: none; }
+      .panel-right { padding: 2rem 1.5rem; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── LEFT ───────────────────────────────────────────── -->
+  <div class="panel-left">
+
+    <!-- decorative leaves -->
+    <svg class="leaf-a" viewBox="0 0 260 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="130" cy="130" rx="110" ry="42" fill="white"/>
+      <ellipse cx="130" cy="130" rx="110" ry="42" fill="white" transform="rotate(60 130 130)"/>
+      <ellipse cx="130" cy="130" rx="110" ry="42" fill="white" transform="rotate(120 130 130)"/>
+      <line x1="130" y1="20" x2="130" y2="240" stroke="white" stroke-width="1.5" opacity=".4"/>
+    </svg>
+    <svg class="leaf-b" viewBox="0 0 190 190" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="95" cy="95" rx="85" ry="32" fill="white"/>
+      <ellipse cx="95" cy="95" rx="85" ry="32" fill="white" transform="rotate(60 95 95)"/>
+      <ellipse cx="95" cy="95" rx="85" ry="32" fill="white" transform="rotate(120 95 95)"/>
+    </svg>
+
+    <!-- waves -->
+    <div class="waves">
+      <div class="wave wave-1">
+        <svg viewBox="0 0 1200 180" preserveAspectRatio="none">
+          <path d="M0,90 C150,140 350,40 600,90 C850,140 1050,40 1200,90 L1200,180 L0,180 Z" fill="white"/>
+        </svg>
+      </div>
+      <div class="wave wave-2">
+        <svg viewBox="0 0 1200 180" preserveAspectRatio="none">
+          <path d="M0,70 C200,130 400,30 600,70 C800,110 1000,30 1200,70 L1200,180 L0,180 Z" fill="#52B788"/>
+        </svg>
+      </div>
+      <div class="wave wave-3">
+        <svg viewBox="0 0 1200 180" preserveAspectRatio="none">
+          <path d="M0,110 C100,60 300,150 600,110 C900,70 1100,150 1200,110 L1200,180 L0,180 Z" fill="#2D7A55"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- brand -->
+    <div class="brand">
+      <div class="brand-logo">
+        <div class="brand-mark">
+          <!-- simple wave mark -->
+          <svg width="22" height="16" viewBox="0 0 22 16" fill="none">
+            <path d="M1 8C3 4 5 4 7 8C9 12 11 12 13 8C15 4 17 4 19 8C20 10 21 11 21 11" stroke="white" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <span class="brand-name">Lendi</span>
+      </div>
+      <div class="demo-badge"><span class="demo-dot"></span>Demo Preview</div>
+    </div>
+
+    <!-- hero -->
+    <div class="hero">
+      <p class="hero-eyebrow">Fiji's first peer-to-peer lending platform</p>
+      <h1 class="hero-heading">
+        Money moves<br>
+        <em>between neighbours,</em><br>
+        not banks.
+      </h1>
+      <p class="hero-body">
+        Lendi connects everyday people across Fiji — those who need funds with those who want to grow their savings. Simple, transparent, community-driven.
+      </p>
+      <div class="stats">
+        <div>
+          <span class="stat-number">0%</span>
+          <span class="stat-label">Bank fees</span>
+        </div>
+        <div>
+          <span class="stat-number">FJ$</span>
+          <span class="stat-label">Local currency</span>
+        </div>
+        <div>
+          <span class="stat-number">Fiji</span>
+          <span class="stat-label">Exclusive</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- footer -->
+    <div class="made-in">
+      <div class="made-in-line"></div>
+      <span class="made-in-text">Made in Fiji, for Fiji</span>
+      <div class="made-in-line"></div>
+    </div>
+  </div>
+
+  <!-- ── RIGHT ──────────────────────────────────────────── -->
+  <div class="panel-right">
+    <div class="form-wrap">
+
+      <!-- tab toggle -->
+      <div class="tabs">
+        <button class="tab active" data-tab="login"  onclick="switchTab('login')">Sign In</button>
+        <button class="tab"        data-tab="signup" onclick="switchTab('signup')">Create Account</button>
+      </div>
+
+      <!-- LOGIN -->
+      <div class="form-panel active" id="panel-login">
+        <div class="fields">
+          <div class="field">
+            <label class="field-label">Email address</label>
+            <input type="email" class="field-input" placeholder="you@example.com">
+          </div>
+          <div class="field">
+            <label class="field-label">Password</label>
+            <input type="password" class="field-input" placeholder="••••••••">
+          </div>
+          <div class="forgot"><a href="#">Forgot password?</a></div>
+        </div>
+
+        <button class="btn-submit" onclick="handleAction(this, 'Signing in…', '✓ Welcome back')">
+          <span>Sign In to Lendi</span>
+        </button>
+
+        <div class="fj-notice">
+          <span class="fj-flag">🇫🇯</span>
+          <div class="fj-text">
+            <strong>Fiji residents only</strong>
+            This platform is exclusively available to people living in Fiji. A valid FJ National ID or TIN is required.
+          </div>
+        </div>
+      </div>
+
+      <!-- SIGNUP -->
+      <div class="form-panel" id="panel-signup">
+
+        <p class="role-label">I want to</p>
+        <div class="role-grid">
+          <label class="role-card">
+            <input type="radio" name="role" value="borrower" checked>
+            <div class="role-inner">
+              <span class="role-icon">
+                <!-- borrower icon: hand holding coin -->
+                <svg width="30" height="30" viewBox="0 0 30 30" fill="none">
+                  <circle cx="15" cy="11" r="7" stroke="#0B3D45" stroke-width="1.5"/>
+                  <path d="M15 8v3l2 2" stroke="#D96B4F" stroke-width="1.5" stroke-linecap="round"/>
+                  <path d="M6 22c0-2 2-4 9-4s9 2 9 4" stroke="#0B3D45" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+              </span>
+              <div class="role-title">Borrow</div>
+              <div class="role-desc">Get funded by community lenders at fair rates</div>
+            </div>
+          </label>
+          <label class="role-card">
+            <input type="radio" name="role" value="lender">
+            <div class="role-inner">
+              <span class="role-icon">
+                <!-- lender icon: growth arrow -->
+                <svg width="30" height="30" viewBox="0 0 30 30" fill="none">
+                  <polyline points="4,22 10,14 15,18 21,10 26,14" stroke="#2D7A55" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  <polyline points="21,8 26,8 26,14" stroke="#52B788" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+              <div class="role-title">Lend</div>
+              <div class="role-desc">Grow your savings by backing vetted borrowers</div>
+            </div>
+          </label>
+        </div>
+
+        <div class="fields">
+          <div class="field-row">
+            <div class="field">
+              <label class="field-label">First name</label>
+              <input type="text" class="field-input" placeholder="Mere">
+            </div>
+            <div class="field">
+              <label class="field-label">Last name</label>
+              <input type="text" class="field-input" placeholder="Vunipola">
+            </div>
+          </div>
+          <div class="field">
+            <label class="field-label">Email address</label>
+            <input type="email" class="field-input" placeholder="you@example.com">
+          </div>
+          <div class="field">
+            <label class="field-label">Mobile (Fiji)</label>
+            <input type="tel" class="field-input" placeholder="+679 000 0000">
+          </div>
+          <div class="field">
+            <label class="field-label">Password</label>
+            <input type="password" class="field-input" placeholder="Min. 8 characters">
+          </div>
+        </div>
+
+        <button class="btn-submit" onclick="handleAction(this, 'Creating account…', '✓ Account created!')">
+          <span>Create My Account</span>
+        </button>
+
+        <p class="terms">
+          By signing up you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.<br>
+          You confirm you are a current resident of Fiji.
+        </p>
+
+        <div class="fj-notice">
+          <span class="fj-flag">🇫🇯</span>
+          <div class="fj-text">
+            <strong>Fiji residents only</strong>
+            This platform is exclusively available to people living in Fiji. A valid FJ National ID or TIN is required.
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    function switchTab(tab) {
+      document.querySelectorAll('.tab').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
+      document.querySelectorAll('.form-panel').forEach(p => p.classList.remove('active'));
+      document.getElementById('panel-' + tab).classList.add('active');
+    }
+
+    function handleAction(btn, loadingText, successText) {
+      const original = btn.querySelector('span').textContent;
+      btn.querySelector('span').textContent = loadingText;
+      btn.style.opacity = '0.75';
+      btn.disabled = true;
+
+      setTimeout(() => {
+        btn.querySelector('span').textContent = successText;
+        btn.style.background = 'var(--green-deep)';
+        btn.style.opacity = '1';
+
+        setTimeout(() => {
+          btn.querySelector('span').textContent = original;
+          btn.style.background = '';
+          btn.disabled = false;
+        }, 2600);
+      }, 1300);
+    }
+  </script>
+</body>
+</html>
